@@ -8,7 +8,7 @@ public class UserRegisteredDTO {
 
 	private String password;
 
-	String role;
+	private String role;
 
 	public String getName() {
 		return name;

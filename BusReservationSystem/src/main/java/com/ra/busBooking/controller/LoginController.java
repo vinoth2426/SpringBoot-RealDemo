@@ -19,7 +19,7 @@ public class LoginController {
 	@Autowired
 	private DefaultUserService userService;
 
-	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	//private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@ModelAttribute("user")
 	public UserLoginDTO userLoginDTO() {
@@ -32,15 +32,8 @@ public class LoginController {
 	}
 
 	@PostMapping
-	public String loginUser(@ModelAttribute("user") UserLoginDTO userLoginDTO) {
-		System.out.println("UserDTO" + userLoginDTO);
-		UserDetails user = userService.loadUserByUsername(userLoginDTO.getUsername());
-		if (user.getPassword().equals(passwordEncoder.encode(userLoginDTO.getPassword()))) {
-
-			return "redirect:/dashboard";
-		} else
-			return "redirect:/login?error";
-
+	public void loginUser(@ModelAttribute("user") UserLoginDTO userLoginDTO) {
+		userService.loadUserByUsername(userLoginDTO.getUsername());
 	}
 
 }
