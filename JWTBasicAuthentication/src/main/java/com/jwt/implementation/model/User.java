@@ -1,9 +1,16 @@
 package com.jwt.implementation.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +23,12 @@ public class User {
 	private String userName;
 	private String password;
 	private String email;
+	
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_role", joinColumns = @JoinColumn(name = "cust_id", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
+	Set<Role> roles=new HashSet<Role>();
+	
 
 	public int getId() {
 		return id;
@@ -48,5 +61,19 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	
+	public void setRole(Role role) {
+		this.roles.add(role);
+	}
+    
+	
+	
+	
+	
 
 }
